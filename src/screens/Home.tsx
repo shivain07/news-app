@@ -4,6 +4,7 @@ import commonAPIService from '../axios-services/common-api-services';
 import { API_URL } from '../apis/BasicUrl';
 import NewsArticle from '../interfaces/NewsArticle';
 import NewsCard from '../components/NewsCard';
+import Loader from '../components/Loader';
 
 /**
  * @desc Home screen featuring a list of news articles
@@ -11,6 +12,7 @@ import NewsCard from '../components/NewsCard';
 
 function Home() {
     const [newsArticles, setNewsArticles] = useState<NewsArticle[]>([]);
+    const [isLoading, setIsLoading] = useState(true);
     const [postNum, setPostNum] = useState({
         initial: 0,
         last: 5
@@ -50,6 +52,7 @@ function Home() {
             if (articleDataObj) {
                 setNewsArticles(articleDataObj);
             }
+            setIsLoading(false);
         });
     }
     const paginateHandler = (type: number) => {
@@ -70,37 +73,40 @@ function Home() {
         }
     }
     return (
-        <Row>
-            <Col>
-                <Row className='d-flex justify-content-around align-items-center'>
-                    {
-                        newsArticles && newsArticles?.slice(postNum.initial, postNum.last)?.map((article) => <Col xs={12} sm={8} md={5} className="p-2 m-2" key={article?.objectID}><NewsCard
-                            key={article.story_id}
-                            created_at={article.created_at}
-                            author={article.author}
-                            comment_text={article.comment_text}
-                            story_id={article.story_id}
-                            story_title={article.story_title}
-                            story_url={article.story_url}
-                            objectID={article.objectID}
-                        /></Col>)
-                    }
-                </Row>
-                {newsArticles.length > 0 && <Row>
-                    <Col>
-                        <div className='d-flex justify-content-between mb-5 py-4'>
-                            <div>
-                                {showArrow.left && <i className="fa fa-arrow-left cursor-pointer font-size-lg" title="Back"
-                                    onClick={() => paginateHandler(-1)}></i>}
-                            </div>
-                            <div>
-                                {showArrow.right && <i className="fa fa-arrow-right cursor-pointer font-size-lg" title="Forward"
-                                    onClick={() => paginateHandler(1)}></i>}
-                            </div>
-                        </div></Col>
-                </Row>}
-            </Col>
-        </Row >
+        <>
+            {isLoading && <Loader />}
+            <Row>
+                <Col>
+                    <Row className='d-flex justify-content-around align-items-center'>
+                        {
+                            newsArticles && newsArticles?.slice(postNum.initial, postNum.last)?.map((article) => <Col xs={12} sm={8} md={5} className="p-2 m-2" key={article?.objectID}><NewsCard
+                                key={article.story_id}
+                                created_at={article.created_at}
+                                author={article.author}
+                                comment_text={article.comment_text}
+                                story_id={article.story_id}
+                                story_title={article.story_title}
+                                story_url={article.story_url}
+                                objectID={article.objectID}
+                            /></Col>)
+                        }
+                    </Row>
+                    {newsArticles.length > 0 && <Row>
+                        <Col>
+                            <div className='d-flex justify-content-between mb-5 py-4'>
+                                <div>
+                                    {showArrow.left && <i className="fa fa-arrow-left cursor-pointer font-size-lg" title="Back"
+                                        onClick={() => paginateHandler(-1)}></i>}
+                                </div>
+                                <div>
+                                    {showArrow.right && <i className="fa fa-arrow-right cursor-pointer font-size-lg" title="Forward"
+                                        onClick={() => paginateHandler(1)}></i>}
+                                </div>
+                            </div></Col>
+                    </Row>}
+                </Col>
+            </Row>
+        </>
     );
 }
 
