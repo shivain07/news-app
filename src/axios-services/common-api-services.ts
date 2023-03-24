@@ -9,7 +9,7 @@ const createAxiosInstance = (baseURL: string) => {
         responseType: "json",
     });
 }
-const axiosInstance = createAxiosInstance("http://hn.algolia.com/api/v1/");
+const axiosInstance = createAxiosInstance("https://hn.algolia.com/api/v1/");
 
 const post = (url: string, data: IData) => {
     return axiosInstance.post(url, data);
