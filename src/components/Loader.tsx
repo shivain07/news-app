@@ -1,5 +1,7 @@
 import { Row, Col, Spinner } from 'react-bootstrap';
-
+/**
+ * @desc a spinner loader component 
+ */
 function Loader() {
     return (
         <Row className='m-2 p-2'>
