@@ -47,7 +47,7 @@ function Home() {
     }, []);
 
     const getuserPosts = () => {
-        commonAPIService.get(API_URL.posts).then((res) => {
+        commonAPIService.get(API_URL.getNewsArticles).then((res) => {
             let articleDataObj = res.data.hits;
             if (articleDataObj) {
                 setNewsArticles(articleDataObj);

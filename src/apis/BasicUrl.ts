@@ -1,3 +1,3 @@
 export const API_URL = {
-    posts: "search_by_date?query=all"
+    getNewsArticles: "search_by_date?query=all"
 }
